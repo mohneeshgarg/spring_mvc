@@ -6,8 +6,6 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name="twitter_message")
 public class Message {
 
     @Id

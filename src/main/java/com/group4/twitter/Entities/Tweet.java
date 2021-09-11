@@ -5,8 +5,6 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name="twitter_tweet")
 public class Tweet {
 
     @Id

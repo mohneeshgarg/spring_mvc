@@ -3,11 +3,8 @@ package com.group4.twitter.Controllers;
 import com.group4.twitter.DAO.UserDAO;
 import com.group4.twitter.Entities.Message;
 import com.group4.twitter.Entities.User;
-import com.group4.twitter.Services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,16 +28,15 @@ public class MessageController {
     @Autowired
     RestTemplate restTemplate;
 
-    @Autowired
-    MessageService messageService;
+    String url = "http://localhost:8091/";
     @RequestMapping("/messages")
     public ModelAndView openMessagePage(){
         ModelAndView mv = new ModelAndView("messages");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails)auth.getPrincipal()).getUsername();
         User user = userDAO.findByUserName(username);
-        List<Message> sentMessages = messageService.findSentMessages(user.getId());
-        List<Message> receivedMessages = messageService.findReceivedMessages(user.getId());
+        List<Message> sentMessages = restTemplate.getForObject(url+"user/"+user.getId()+"/message/sent/", List.class);
+        List<Message> receivedMessages = restTemplate.getForObject(url+"user/"+user.getId()+"/message/received/", List.class);
         mv.addObject("id", user.getId());
         mv.addObject("sent", sentMessages);
         mv.addObject("received", receivedMessages);
@@ -63,9 +59,9 @@ public class MessageController {
         Date current_date = new Date();
         Message message = new Message(messageBody, id, toUser.getId(), fromUser.getName(), toUser.getName(), current_date, current_date);
         System.out.println(toUser.getName());
-        messageService.insert(message);
+        String s = restTemplate.postForObject(url+"message/new", message, String.class);
         System.out.println(message);
         System.out.println("Message Created!");
-        return "redirect:/";
+        return "redirect:/messages";
     }
 }

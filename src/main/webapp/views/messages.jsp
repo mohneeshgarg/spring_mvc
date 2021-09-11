@@ -44,8 +44,8 @@
         <div class="card text-white bg-success mb-3 offset-3 col-6">
           <div class="card-header">Sent Message</div>
           <div class="card-body">
-            <h5 class="card-title">${message.getReceiverName()}</h5>
-            <p class="card-text">${message.getBody()}</p>
+            <h5 class="card-title">${message.get('receiverName')}</h5>
+            <p class="card-text">${message.get('body')}</p>
           </div>
         </div>
 </core:forEach>
@@ -59,8 +59,8 @@
         <div class="card text-white bg-primary mb-3 offset-3 col-6">
           <div class="card-header">Received Message</div>
           <div class="card-body">
-            <h5 class="card-title">${message.getSenderName()}</h5>
-            <p class="card-text">${message.getBody()}</p>
+            <h5 class="card-title">${message.get('senderName')}</h5>
+            <p class="card-text">${message.get('body')}</p>
           </div>
         </div>
 </core:forEach>

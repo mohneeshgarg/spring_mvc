@@ -56,11 +56,11 @@
         <div class="card text-white bg-primary mb-3 offset-3 col-6">
           <div class="card-header">Tweet</div>
           <div class="card-body">
-            <h5 class="card-title">${tweet.getOwnerName()}</h5>
-            <p class="card-text">${tweet.getBody()}</p>
+            <h5 class="card-title">${tweet.get('ownerName')}</h5>
+            <p class="card-text">${tweet.get('body')}</p>
           </div>
            <div class="card-footer">
-           <form action="/tweet/delete/${tweet.getTweetId()}">
+           <form action="/tweet/delete/${tweet.get('tweetId')}">
             <button class="btn btn-danger"> Delete </button>
             </form>
            </div>

@@ -1,20 +1,16 @@
 package com.group4.twitter.Controllers;
 
-import com.group4.twitter.DAO.TweetDAO;
 import com.group4.twitter.DAO.UserDAO;
 import com.group4.twitter.Entities.Tweet;
 import com.group4.twitter.Entities.User;
-import com.group4.twitter.Services.TweetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -24,8 +20,8 @@ public class HomeController {
 
     @Autowired
     UserDAO userDAO;
-    @Autowired
-    TweetService tweetService;
+
+    RestTemplate restTemplate = new RestTemplate();
 
     @RequestMapping("/")
     public ModelAndView openHome(){
@@ -39,8 +35,10 @@ public class HomeController {
             User user = userDAO.findByUserName(username);
             mv.addObject("id", user.getId());
         }
-        List<Tweet> tweetList = tweetService.getAllTweets();
+        String url = "http://localhost:8083/";
+        List<Tweet> tweetList = restTemplate.getForObject(url+"tweets/all", List.class);
         mv.addObject("flag",  flag);
+        System.out.println(tweetList);
         mv.addObject("tweets", tweetList);
         return mv;
     }
