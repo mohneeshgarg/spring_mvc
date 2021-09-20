@@ -32,7 +32,7 @@ public class User implements UserDetails {
     }
 
     public String getRole() {
-        return "User";
+        return role;
     }
 
     public void setRole(String role) {
@@ -74,7 +74,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-       authorities.add(new SimpleGrantedAuthority("User"));
+       authorities.add(new SimpleGrantedAuthority(role));
         System.out.println(authorities);
         return authorities;
     }

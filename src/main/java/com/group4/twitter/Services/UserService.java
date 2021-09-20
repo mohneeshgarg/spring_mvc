@@ -31,7 +31,11 @@ public class UserService implements UserDetailsService {
         userDAO.save(user);
         return "User updated successfully!";
     }
-
+    public String deleteUser(int id){
+        User user = userDAO.findById(id).get();
+        userDAO.delete(user);
+        return "User deleted successfully!";
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDAO.findByUserName(username);

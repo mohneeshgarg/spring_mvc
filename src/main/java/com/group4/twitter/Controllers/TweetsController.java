@@ -49,4 +49,9 @@ public class TweetsController {
         String s = restTemplate.postForObject(url+"/tweet/delete", id, String.class);
         return "redirect:/";
     }
+    @GetMapping("/tweet/like/{id}")
+    public String likeTweet(@PathVariable int id){
+        String s = restTemplate.getForObject(url+"tweet/like/"+id, String.class);
+        return "redirect:/";
+    }
 }
